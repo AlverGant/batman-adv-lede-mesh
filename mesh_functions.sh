@@ -155,7 +155,7 @@ function createConfigFilesNode(){
 
 function compile_Image(){
 	# Compile from source
-	rm "${build_dir[$batman_routing_algo]}"/bin/"${platform[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
+	rm "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
 	cd "${build_dir[$batman_routing_algo]}"
 	make -j${nproc} V=s
 }
@@ -171,8 +171,8 @@ function check_Firmware_imagebuilder(){
 	# CHECK SHA256 OF COMPILED IMAGE
 	export build_successfull='0'
 	export checksum_OK='0'
-	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${platform[$devicetype]}"/"${firmware_name_imagebuilder[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/"${platform[$devicetype]}"
+	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${firmware_name_imagebuilder[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"
 	if [ -f "${firmware_name_imagebuilder[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -190,7 +190,7 @@ function check_Firmware_imagebuilder(){
 }
 
 function copy_Firmware_imagebuilder(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${platform[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
 		cp "${firmware_name_imagebuilder[$devicetype]}" $install_dir/firmwares/"$hostname".bin
 		rm "${firmware_name_imagebuilder[$devicetype]}"
@@ -203,8 +203,8 @@ function check_Firmware_compile(){
 	# CHECK SHA256 OF COMPILED IMAGE
 	export build_successfull='0'
 	export checksum_OK='0'
-	echo "${build_dir[$batman_routing_algo]}"/bin/"${platform[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/"${platform[$devicetype]}"
+	echo "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"
 	if [ -f "${firmware_name_compile[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -222,7 +222,7 @@ function check_Firmware_compile(){
 }
 
 function copy_Firmware_compile(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${platform[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
 		cp "${firmware_name_compile[$devicetype]}" $instal_dir/firmwares/"hostname".bin
 		rm "${firmware_name_compile[$devicetype]}"
