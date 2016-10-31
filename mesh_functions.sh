@@ -172,7 +172,7 @@ function check_Firmware_imagebuilder(){
 	export build_successfull='0'
 	export checksum_OK='0'
 	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/"${firmware_name_imagebuilder[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${subtarget[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"
 	if [ -f "${firmware_name_imagebuilder[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
