@@ -24,7 +24,7 @@ function downloadImageBuilder(){
 	echo "Downloading LEDE Image Builder"
 	cd $install_dir || exit
 	wget --continue https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
-	tar -xvjf lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
+	tar xf lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
 	#rm -rf lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
 }
 
