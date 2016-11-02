@@ -23,9 +23,9 @@ function download_LEDE_source(){
 function downloadImageBuilder(){
 	echo "Downloading LEDE Image Builder"
 	cd $install_dir || exit
-	wget --continue https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
-	tar xf lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
-	#rm -rf lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz
+	wget --continue https://downloads.lede-project.org/snapshots/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
+	tar xf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
+	#rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 }
 
 function install_Feeds(){
