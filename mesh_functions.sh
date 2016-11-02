@@ -162,7 +162,7 @@ function compile_Image(){
 
 function build_Image(){
 	echo "Building LEDE image with config files"
-	# Make Openwrt Firmware for specified platform using config files above
+	# Make LEDE Firmware for specified platform using config files above
 	cd "${build_dir[$batman_routing_algo]}" || exit
 	make image PROFILE="${profile[$devicetype]}" PACKAGES="${packages[$devicetype]}" FILES=files/
 }
