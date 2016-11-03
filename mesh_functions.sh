@@ -43,8 +43,6 @@ function config_LEDE(){
 }
 
 function downloadNodesTemplateConfigs(){
-	cd ../"$install_dir" || exit
-	git clone https://github.com/AlverGant/batman-adv-lede-mesh
 	cd "$install_dir" || exit
 	git pull
 }
