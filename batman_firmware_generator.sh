@@ -3,20 +3,19 @@
 # Retrieve current directory
 install_dir=$(pwd)
 
+# Read configurations
+echo "Reading mesh configs...." >&2
+. mesh_configs.cfg
+# Read functions
+echo "Reading mesh functions...." >&2
+. mesh_functions.sh
+
 # create directory for firmwares output
 if [ -f "$install_dir"/firmwares ]; then
 	mkdir "$install_dir"/firmwares
 else
 	cd "$install_dir"/firmwares || rm *.bin
 fi
-
-# Read configurations
-echo "Reading mesh configs...." >&2
-. mesh_configs.cfg
-
-# Read functions
-echo "Reading mesh functions...." >&2
-. mesh_functions.sh
 
 # FIRMWARE GENERATION PROCESS 
 install_Prerequisites
