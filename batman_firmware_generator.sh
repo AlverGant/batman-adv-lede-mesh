@@ -3,7 +3,7 @@
 # Retrieve current directory
 install_dir=$(pwd)
 # create directory for firmwares output
-mkdir $install_dir/firmwares
+mkdir "$install_dir"/firmwares
 
 # Read configurations
 echo "Reading mesh configs...." >&2
@@ -51,5 +51,5 @@ case $batman_routing_algo in
 		error_exit "check batman protocol version selection, it is wrong"
 esac
 echo "Firmware files are bellow"
-echo "on directory "$install_dir"/firmwares"
-cd $install_dir/firmwares ; ls -l *.bin
+echo "on directory $install_dir/firmwares"
+cd "$install_dir"/firmwares || ls -l ./*.bin

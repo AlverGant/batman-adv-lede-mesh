@@ -16,20 +16,20 @@ function install_Prerequisites(){
 }
 
 function download_LEDE_source(){
-	cd $install_dir
+	cd "$install_dir" || exit
 	git clone http://git.lede-project.org/source.git
 }
 
 function downloadImageBuilder(){
 	echo "Downloading LEDE Image Builder"
-	cd $install_dir || exit
+	cd "$install_dir" || exit
 	wget --continue https://downloads.lede-project.org/snapshots/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	tar xf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	#rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 }
 
 function install_Feeds(){
-	cd "${build_dir[$batman_routing_algo]}"
+	cd "${build_dir[$batman_routing_algo]}" || exit
 	git pull
 	# update and install feeds
 	./scripts/feeds update -a
@@ -37,14 +37,16 @@ function install_Feeds(){
 }
 
 function config_LEDE(){
-	cd "${build_dir[$batman_routing_algo]}"
-	cp -f $install_dir/$devicetype/diffconfig .config
+	cd "${build_dir[$batman_routing_algo]}" || exit
+	cp -f "$install_dir"/"$devicetype"/diffconfig .config
 	make defconfig
 }
 
 function downloadNodesTemplateConfigs(){
-	cd ../$install_dir ; git clone https://github.com/AlverGant/batman-adv-lede-mesh
-	cd $install_dir ; git pull
+	cd ../"$install_dir" || exit
+	git clone https://github.com/AlverGant/batman-adv-lede-mesh
+	cd "$install_dir" || exit
+	git pull
 }
 
 function substituteVariables(){
@@ -93,70 +95,70 @@ function substituteVariables(){
 }
 
 function createConfigFilesGateway(){
-	cd "${build_dir[$batman_routing_algo]}"
+	cd "${build_dir[$batman_routing_algo]}" || exit
 	rm -rf files
 	mkdir files
 	mkdir files/etc
 	mkdir files/etc/config
-	cd "${build_dir[$batman_routing_algo]}"/files/etc/config
-	cp -f $install_dir/$devicetype/gateway_files/alfred .
+	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || exit
+	cp -f "$install_dir"/"$devicetype"/gateway_files/alfred .
 	if [ "$batman_routing_algo" == "BATMAN_IV" ]; then
-		cp -f $install_dir/$devicetype/gateway_files/batman-adv-v4 batman-adv
+		cp -f "$install_dir"/"$devicetype"/gateway_files/batman-adv-v4 batman-adv
 	fi
 	if [ "$batman_routing_algo" == "BATMAN_V" ]; then
-		cp -f $install_dir/$devicetype/gateway_files/batman-adv-v5 batman-adv
+		cp -f "$install_dir"/"$devicetype"/gateway_files/batman-adv-v5 batman-adv
 	fi	
-	cp -f $install_dir/$devicetype/gateway_files/dhcp .
-	cp -f $install_dir/$devicetype/gateway_files/firewall .
-	cp -f $install_dir/$devicetype/gateway_files/wireless .
-	cp -f $install_dir/$devicetype/gateway_files/snmpd .
-	cp -f $install_dir/$devicetype/gateway_files/system .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/dhcp .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/firewall .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/wireless .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/snmpd .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/system .
 	if [ "$wan_protocol" == "dhcp" ]; then
-		cp -f $install_dir/$devicetype/gateway_files/network_wan_dhcp network
+		cp -f "$install_dir"/"$devicetype"/gateway_files/network_wan_dhcp network
 	fi
 	if [ "$wan_protocol" == "static" ]; then
-		cp -f $install_dir/$devicetype/gateway_files/network_wan_static network
+		cp -f "$install_dir"/"$devicetype"/gateway_files/network_wan_static network
 	fi
-	cd "${build_dir[$batman_routing_algo]}"/files/etc
-	cp -f $install_dir/$devicetype/gateway_files/resolv.conf .
-	cp -f $install_dir/$devicetype/gateway_files/rc.local .
-	cp -f $install_dir/$devicetype/gateway_files/passwd .
-	cp -f $install_dir/$devicetype/gateway_files/shadow .
+	cd "${build_dir[$batman_routing_algo]}"/files/etc || exit
+	cp -f "$install_dir"/"$devicetype"/gateway_files/resolv.conf .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/rc.local .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/passwd .
+	cp -f "$install_dir"/"$devicetype"/gateway_files/shadow .
 	substituteVariables
 }
 
 function createConfigFilesNode(){
-	cd "${build_dir[$batman_routing_algo]}"
+	cd "${build_dir[$batman_routing_algo]}" || exit
 	rm -rf files
 	mkdir files
 	mkdir files/etc
 	mkdir files/etc/config
-	cd "${build_dir[$batman_routing_algo]}"/files/etc/config
-	cp -f $install_dir/$devicetype/nodes_files/alfred .
+	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || exit
+	cp -f "$install_dir"/"$devicetype"/nodes_files/alfred .
 	if [ "$batman_routing_algo" == "BATMAN_IV" ]; then
-		cp -f $install_dir/$devicetype/nodes_files/batman-adv-v4 batman-adv
+		cp -f "$install_dir"/"$devicetype"/nodes_files/batman-adv-v4 batman-adv
 	fi
 	if [ "$batman_routing_algo" == "BATMAN_V" ]; then
-		cp -f $install_dir/$devicetype/nodes_files/batman-adv-v5 batman-adv
+		cp -f "$install_dir"/"$devicetype"/nodes_files/batman-adv-v5 batman-adv
 	fi	
-	cp -f $install_dir/$devicetype/nodes_files/dhcp .
-	cp -f $install_dir/$devicetype/nodes_files/firewall .
-	cp -f $install_dir/$devicetype/nodes_files/wireless .
-	cp -f $install_dir/$devicetype/nodes_files/snmpd .
-	cp -f $install_dir/$devicetype/nodes_files/network .
-	cp -f $install_dir/$devicetype/nodes_files/system .
-	cd "${build_dir[$batman_routing_algo]}"/files/etc
-	cp -f $install_dir/$devicetype/nodes_files/resolv.conf .
-	cp -f $install_dir/$devicetype/nodes_files/rc.local .
-	cp -f $install_dir/$devicetype/nodes_files/passwd .
-	cp -f $install_dir/$devicetype/nodes_files/shadow .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/dhcp .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/firewall .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/wireless .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/snmpd .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/network .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/system .
+	cd "${build_dir[$batman_routing_algo]}"/files/etc || exit
+	cp -f "$install_dir"/"$devicetype"/nodes_files/resolv.conf .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/rc.local .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/passwd .
+	cp -f "$install_dir"/"$devicetype"/nodes_files/shadow .
 	substituteVariables
 }
 
 function compile_Image(){
 	# Compile from source
 	rm "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"
+	cd "${build_dir[$batman_routing_algo]}" || exit
 	make -j${nproc} V=s
 }
 
@@ -172,7 +174,7 @@ function check_Firmware_imagebuilder(){
 	export build_successfull='0'
 	export checksum_OK='0'
 	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/"${firmware_name_imagebuilder[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
 	if [ -f "${firmware_name_imagebuilder[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -190,9 +192,9 @@ function check_Firmware_imagebuilder(){
 }
 
 function copy_Firmware_imagebuilder(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
-		cp "${firmware_name_imagebuilder[$devicetype]}" $install_dir/firmwares/"$hostname".bin
+		cp "${firmware_name_imagebuilder[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_imagebuilder[$devicetype]}"
 	else
 		error_exit "Problems found trying to deliver firmware, check available disk space"
@@ -204,7 +206,7 @@ function check_Firmware_compile(){
 	export build_successfull='0'
 	export checksum_OK='0'
 	echo "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}" || exit
 	if [ -f "${firmware_name_compile[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -222,9 +224,9 @@ function check_Firmware_compile(){
 }
 
 function copy_Firmware_compile(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}" || exit
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
-		cp "${firmware_name_compile[$devicetype]}" $instal_dir/firmwares/"hostname".bin
+		cp "${firmware_name_compile[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_compile[$devicetype]}"
 	else
 		error_exit "Problems found trying to deliver firmware, check available disk space"
