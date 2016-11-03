@@ -205,8 +205,8 @@ function check_Firmware_compile(){
 	# CHECK SHA256 OF COMPILED IMAGE
 	export build_successfull='0'
 	export checksum_OK='0'
-	echo "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}" || exit
+	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}" || exit
 	if [ -f "${firmware_name_compile[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
