@@ -6,6 +6,8 @@ install_dir=$(pwd)
 # create directory for firmwares output
 if [ -f "$install_dir"/firmwares ]; then
 	mkdir "$install_dir"/firmwares
+else
+	cd "$install_dir"/firmwares || rm *.bin
 fi
 
 # Read configurations
