@@ -1,4 +1,4 @@
-ONFIG_TARGET_ar71xx=y
+CONFIG_TARGET_ar71xx=y
 CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_DEVICE_tl-wr740n-v5=y
 CONFIG_ALFRED_NEEDS_lua=y
