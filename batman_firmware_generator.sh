@@ -14,7 +14,7 @@ echo "Reading mesh functions...." >&2
 if [ -f "$install_dir"/firmwares ]; then
 	mkdir "$install_dir"/firmwares
 else
-	cd "$install_dir"/firmwares || rm *.bin
+	cd "$install_dir"/firmwares && rm *.bin
 fi
 
 # FIRMWARE GENERATION PROCESS 
