@@ -16,20 +16,20 @@ function install_Prerequisites(){
 }
 
 function download_LEDE_source(){
-	cd "$install_dir" || exit
+	cd "$install_dir" || error_exit "Installation directory cannot be found anymore, please git clone batman repo again"
 	git clone http://git.lede-project.org/source.git
 }
 
 function downloadImageBuilder(){
 	echo "Downloading LEDE Image Builder"
-	cd "$install_dir" || exit
+	cd "$install_dir" || error_exit "Installation directory cannot be found anymore, please git clone batman repo again"
 	wget --continue https://downloads.lede-project.org/snapshots/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	tar xf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	#rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 }
 
 function install_Feeds(){
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	git pull
 	# update and install feeds
 	./scripts/feeds update -a
@@ -37,13 +37,13 @@ function install_Feeds(){
 }
 
 function config_LEDE(){
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	cp -f "$install_dir"/"$devicetype"/diffconfig .config
 	make defconfig
 }
 
 function downloadNodesTemplateConfigs(){
-	cd "$install_dir" || exit
+	cd "$install_dir" || error_exit "Installation directory cannot be found anymore, please git clone batman repo again"
 	git pull
 }
 
@@ -93,12 +93,12 @@ function substituteVariables(){
 }
 
 function createConfigFilesGateway(){
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	rm -rf files
 	mkdir files
 	mkdir files/etc
 	mkdir files/etc/config
-	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || exit
+	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || error_exit "LEDE config directory cannot be found, please check write permissions on this directory"
 	cp -f "$install_dir"/"$devicetype"/gateway_files/alfred .
 	if [ "$batman_routing_algo" == "BATMAN_IV" ]; then
 		cp -f "$install_dir"/"$devicetype"/gateway_files/batman-adv-v4 batman-adv
@@ -117,7 +117,7 @@ function createConfigFilesGateway(){
 	if [ "$wan_protocol" == "static" ]; then
 		cp -f "$install_dir"/"$devicetype"/gateway_files/network_wan_static network
 	fi
-	cd "${build_dir[$batman_routing_algo]}"/files/etc || exit
+	cd "${build_dir[$batman_routing_algo]}"/files/etc || error_exit "LEDE config directory cannot be found, please check write permissions on this directory"
 	cp -f "$install_dir"/"$devicetype"/gateway_files/resolv.conf .
 	cp -f "$install_dir"/"$devicetype"/gateway_files/rc.local .
 	cp -f "$install_dir"/"$devicetype"/gateway_files/passwd .
@@ -126,12 +126,12 @@ function createConfigFilesGateway(){
 }
 
 function createConfigFilesNode(){
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	rm -rf files
 	mkdir files
 	mkdir files/etc
 	mkdir files/etc/config
-	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || exit
+	cd "${build_dir[$batman_routing_algo]}"/files/etc/config || error_exit "LEDE config directory cannot be found, please check write permissions on this directory"
 	cp -f "$install_dir"/"$devicetype"/nodes_files/alfred .
 	if [ "$batman_routing_algo" == "BATMAN_IV" ]; then
 		cp -f "$install_dir"/"$devicetype"/nodes_files/batman-adv-v4 batman-adv
@@ -145,7 +145,7 @@ function createConfigFilesNode(){
 	cp -f "$install_dir"/"$devicetype"/nodes_files/snmpd .
 	cp -f "$install_dir"/"$devicetype"/nodes_files/network .
 	cp -f "$install_dir"/"$devicetype"/nodes_files/system .
-	cd "${build_dir[$batman_routing_algo]}"/files/etc || exit
+	cd "${build_dir[$batman_routing_algo]}"/files/etc || error_exit "LEDE config directory cannot be found, please check write permissions on this directory"
 	cp -f "$install_dir"/"$devicetype"/nodes_files/resolv.conf .
 	cp -f "$install_dir"/"$devicetype"/nodes_files/rc.local .
 	cp -f "$install_dir"/"$devicetype"/nodes_files/passwd .
@@ -156,14 +156,14 @@ function createConfigFilesNode(){
 function compile_Image(){
 	# Compile from source
 	rm "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	make -j${nproc} V=s
 }
 
 function build_Image(){
 	echo "Building LEDE image with config files"
 	# Make LEDE Firmware for specified platform using config files above
-	cd "${build_dir[$batman_routing_algo]}" || exit
+	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
 	make image PROFILE="${profile[$devicetype]}" PACKAGES="${packages[$devicetype]}" FILES=files/
 }
 
@@ -177,14 +177,14 @@ function check_Firmware_imagebuilder(){
 		echo "Compilation Successfull"
 		export build_successfull='1'
 	else
-		error_exit "Errors found during compilation, firmware not found"
+		error_exit "Errors found during compilation, firmware not found, check build log on screen for errors"
 	fi
 	if [ $build_successfull -eq '1' ]; then
 		if grep "${firmware_name_imagebuilder[$devicetype]}" sha256sums | tee /proc/self/fd/2 | sha256sum --check - ; then
 			echo "Checksum OK"
 			export checksum_OK='1'
 		else
-			error_exit "Firmware checksum is incorrect, aborting!"
+			error_exit "Firmware checksum is incorrect, aborting! Check internet connection and available disk space"
 		fi
 	fi
 }
@@ -195,7 +195,7 @@ function copy_Firmware_imagebuilder(){
 		cp "${firmware_name_imagebuilder[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_imagebuilder[$devicetype]}"
 	else
-		error_exit "Problems found trying to deliver firmware, check available disk space"
+		error_exit "Problems found trying to deliver firmware to output directory, check available disk space"
 	fi
 }
 
@@ -209,14 +209,14 @@ function check_Firmware_compile(){
 		echo "Compilation Successfull"
 		export build_successfull='1'
 	else
-		error_exit "Errors found during compilation, firmware not found"
+		error_exit "Errors found during compilation, firmware not found, check build log on screen for errors"
 	fi
 	if [ $build_successfull -eq '1' ]; then
 		if grep "${firmware_name_compile[$devicetype]}" sha256sums | tee /proc/self/fd/2 | sha256sum --check - ; then
 			echo "Checksum OK"
 			export checksum_OK='1'
 		else
-			error_exit "Firmware checksum is incorrect, aborting!"
+			error_exit "Firmware checksum is incorrect, aborting! Check internet connection and available disk space"
 		fi
 	fi
 }
@@ -227,6 +227,6 @@ function copy_Firmware_compile(){
 		cp "${firmware_name_compile[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_compile[$devicetype]}"
 	else
-		error_exit "Problems found trying to deliver firmware, check available disk space"
+		error_exit "Problems found trying to deliver firmware to output directory, check available disk space"
 	fi
 }
