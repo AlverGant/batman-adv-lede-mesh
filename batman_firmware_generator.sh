@@ -2,8 +2,11 @@
 
 # Retrieve current directory
 install_dir=$(pwd)
+
 # create directory for firmwares output
-mkdir "$install_dir"/firmwares
+if [ -f "$install_dir"/firmwares ]; then
+	mkdir "$install_dir"/firmwares
+fi
 
 # Read configurations
 echo "Reading mesh configs...." >&2
@@ -52,4 +55,4 @@ case $batman_routing_algo in
 esac
 echo "Firmware files are bellow"
 echo "on directory $install_dir/firmwares"
-cd "$install_dir"/firmwares || ls -l ./*.bin
+cd "$install_dir"/firmwares && ls -l ./*.bin
