@@ -88,7 +88,10 @@ function substituteVariables(){
 		sed -i "s/\$syscontact/'${syscontact}'/g" "$files"
 		sed -i "s/\$syslocation/'${syslocation}'/g" "$files"
 		sed -i "s/\$upstream_dns/'${upstream_dns}'/g" "$files"
+		sed -i "s/\$macfilter/'${macfilter}'/g" "$files"
 		sed -i "s/\$maclist/'${maclist}'/g" "$files"
+		sed -i "s/\$hide_ap_ssid'${hide_ap_ssid}'/g" "$files"
+		sed -i "s/\$dynamicdhcp'${dynamicdhcp}'/g" "$files"
 	done
 }
 
@@ -107,6 +110,9 @@ function createConfigFilesGateway(){
 		cp -f "$install_dir"/"$devicetype"/gateway_files/batman-adv-v5 batman-adv
 	fi	
 	cp -f "$install_dir"/"$devicetype"/gateway_files/dhcp .
+	if [ "$dynamicdhcp" == "0" ]; then
+		cat "$install_dir"/"$devicetype"/gateway_files/static_leases >> dhcp
+	fi	
 	cp -f "$install_dir"/"$devicetype"/gateway_files/firewall .
 	cp -f "$install_dir"/"$devicetype"/gateway_files/wireless .
 	cp -f "$install_dir"/"$devicetype"/gateway_files/snmpd .
