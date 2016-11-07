@@ -6,15 +6,16 @@ install_dir=$(pwd)
 # Read configurations
 echo "Reading mesh configs...." >&2
 . mesh_configs.cfg
+
 # Read functions
 echo "Reading mesh functions...." >&2
 . mesh_functions.sh
 
 # create directory for firmwares output
 if [ -f "$install_dir"/firmwares ]; then
-	mkdir "$install_dir"/firmwares
-else
 	cd "$install_dir"/firmwares && rm *.bin
+else
+	mkdir "$install_dir"/firmwares
 fi
 
 # FIRMWARE GENERATION PROCESS 
@@ -55,5 +56,5 @@ case $batman_routing_algo in
 		error_exit "check batman protocol version selection, it is wrong"
 esac
 echo "Firmware files are bellow"
-echo "on directory $install_dir/firmwares"
+echo "on directory "$install_dir"/firmwares"
 cd "$install_dir"/firmwares && ls -l ./*.bin
