@@ -52,9 +52,9 @@ config wifi-iface
 	option nasid 'meshmobility'
 	option pmk_r1_push '1'
 	option disabled $radio0_ap_disable
-	option macfilter 'allow'
+	option macfilter $macfilter
 	list maclist $maclist
-	option hidden '1'
+	option hidden $hide_ap_ssid
 
 config wifi-iface
 	option device 'radio1'
@@ -68,6 +68,6 @@ config wifi-iface
 	option nasid 'meshmobility'
 	option pmk_r1_push '1'
 	option disabled $radio1_ap_disable
-	option macfilter 'allow'
+	option macfilter $macfilter
 	list maclist $maclist
-	option hidden '1'
+	option hidden $hide_ap_ssid
