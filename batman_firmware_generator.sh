@@ -12,7 +12,7 @@ echo "Reading mesh functions...." >&2
 . mesh_functions.sh
 
 # create directory for firmwares output
-if [ -f "$install_dir"/firmwares ]; then
+if [ -d "$install_dir"/firmwares ]; then
 	cd "$install_dir"/firmwares && rm *.bin
 else
 	mkdir "$install_dir"/firmwares
