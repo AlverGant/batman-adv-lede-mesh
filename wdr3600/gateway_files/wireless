@@ -19,6 +19,22 @@ config wifi-iface
 	option hidden '1'
 	option disabled $adhoc0_disable
 
+config wifi-iface
+	option device 'radio0'
+	option mode 'ap'
+	option ssid $ssid
+	option encryption 'psk2'
+	option key $wpa2key
+	option network 'lan'
+	option ieee80211r '1'
+	option mobility_domain $mobility_domain
+	option nasid 'meshmobility'
+	option pmk_r1_push '1'
+	option disabled $radio0_ap_disable
+	option macfilter $macfilter
+	list maclist $maclist
+	option hidden $hide_ap_ssid
+
 config wifi-device 'radio1'
 	option type 'mac80211'
 	option hwmode '11a'
@@ -39,22 +55,6 @@ config wifi-iface
 	option network $interface_name
 	option hidden '1'
 	option disabled $adhoc1_disable
-
-config wifi-iface
-	option device 'radio0'
-	option mode 'ap'
-	option ssid $ssid
-	option encryption 'psk2'
-	option key $wpa2key
-	option network 'lan'
-	option ieee80211r '1'
-	option mobility_domain $mobility_domain
-	option nasid 'meshmobility'
-	option pmk_r1_push '1'
-	option disabled $radio0_ap_disable
-	option macfilter $macfilter
-	list maclist $maclist
-	option hidden $hide_ap_ssid
 
 config wifi-iface
 	option device 'radio1'
