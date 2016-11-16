@@ -3,7 +3,7 @@ config dnsmasq
 	option boguspriv '1'
 	option filterwin2k '0'
 	option localise_queries '1'
-	option rebind_protection '1'
+	option rebind_protection '0'
 	option rebind_localhost '1'
 	option local '/lan/'
 	option domain $domain
