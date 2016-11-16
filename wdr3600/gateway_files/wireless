@@ -40,7 +40,7 @@ config wifi-device 'radio1'
 	option hwmode '11a'
 	option path 'pci0000:00/0000:00:00.0'
 	option channel $radio1_channel
-	option htmode 'HT40'
+	option htmode 'HT20'
 	option noscan '1'
 	option disabled $radio1_disable
 
