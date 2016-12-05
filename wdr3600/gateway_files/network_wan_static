@@ -37,7 +37,7 @@ config switch
 config switch_vlan
 	option device 'switch0'
 	option vlan '1'
-	option ports '0t 2 3 4'
+	option ports '0t 2 3'
 
 config switch_vlan
 	option device 'switch0'
@@ -50,8 +50,13 @@ config interface $interface_name
 	option mtu '1560'
 	option 'routing_algo' '$batman_routing_algo'
 
-config interface 'wired_mesh'
+config interface 'wired_mesh_port_4'
 	option ifname 'eth0.5'
+	option mtu '1560'
+	option proto 'none'
+
+config interface 'wired_mesh_port_3'
+	option ifname 'eth0.4'
 	option mtu '1560'
 	option proto 'none'
 
@@ -63,3 +68,8 @@ config switch_vlan
 	option device 'switch0'
 	option vlan '5'
 	option ports '0t 5'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '4'
+	option ports '0t 4'
