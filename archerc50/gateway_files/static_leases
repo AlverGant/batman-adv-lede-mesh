@@ -1,3 +1,4 @@
+
 config host
         option ip       '10.61.34.2'
         option mac      '84:8e:0c:3e:3d:e8'
@@ -54,9 +55,9 @@ config host
         option name     'node-2'
 
 config host
-	option ip	'10.61.34.13'
-	option mac	'c4:e9:84:87:aa:eb'
-	option name	'node-3'
+        option ip       '10.61.34.13'
+        option mac      'c4:e9:84:87:aa:eb'
+        option name     'node-3'
 
 config host
         option ip       '10.61.34.14'
@@ -69,24 +70,14 @@ config host
         option name     'node-5'
 
 config host
-	option ip	'10.61.34.16'
-	option mac	'78:51:0c:00:50:35'
-	option name	'liveu-jorn-01-sp'
+        option ip       '10.61.34.16'
+        option mac      '78:51:0c:00:50:35'
+        option name     'liveu-jorn-01-sp'
 
 config host
-	option ip	'10.61.34.17'
-	option mac	'78:51:0c:00:2d:51'
-	option name	'liveu-jorn-03-sp'
-
-config host
-	option ip	'10.61.34.18'
-	option mac	'c4:e9:84:f9:c9:87'
-	option name	'node-6'
-
-config host
-	option ip	'10.61.34.19'
-	option mac	'c4:e9:84:f9:d6:3b'
-	option name	'node-7'
+        option ip       '10.61.34.17'
+        option mac      '78:51:0c:00:2d:51'
+        option name     'liveu-jorn-03-sp'
 
 config host
         option ip       '10.61.34.21'
@@ -102,4 +93,3 @@ config host
         option ip       '10.61.34.23'
         option mac      '90:48:9A:EE:8B:87'
         option name     'dell-latitude-3540-gazeta'
-
