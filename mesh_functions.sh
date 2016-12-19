@@ -27,7 +27,6 @@ function downloadImageBuilder(){
 	wget --continue https://downloads.lede-project.org/snapshots/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64
 	tar xf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
-	#rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 }
 
 function install_Feeds(){
@@ -69,8 +68,6 @@ function substituteVariables(){
 		sed -i "s/\$mobility_domain/'${mobility_domain}'/g" "$files"
 		sed -i "s/\$batman_routing_algo/'${batman_routing_algo}'/g" "$files"
 		sed -i "s/\$interface_name/'${interface_name}'/g" "$files"
-		sed -i "s/\$radio1_channel/'${radio1_channel}'/g" "$files"
-		sed -i "s/\$radio1_channel/'${radio1_channel}'/g" "$files"
 		sed -i "s/\$interface_mesh_name/'${interface_mesh_name}'/g" "$files"
 		sed -i "s/\$interface_ifname0/'${interface_ifname0}'/g" "$files"
 		sed -i "s/\$interface_ifname1/'${interface_ifname1}'/g" "$files"

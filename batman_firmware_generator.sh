@@ -29,6 +29,7 @@ case $batman_routing_algo in
 		copy_Firmware_imagebuilder
 		for ((i=1; i<=numberofnodes; i++)); do
 			export hostname=node-$i
+			export syslocation=${gps_coordinates[$hostname]}
 			createConfigFilesNode
 			build_Image
 			check_Firmware_imagebuilder
@@ -46,6 +47,7 @@ case $batman_routing_algo in
 		copy_Firmware_compile
 		for ((i=1; i<=numberofnodes; i++)); do
 			export hostname=node-$i
+			export syslocation=${gps_coordinates[$hostname]}
 			createConfigFilesNode
 			compile_Image
 			check_Firmware_compile
