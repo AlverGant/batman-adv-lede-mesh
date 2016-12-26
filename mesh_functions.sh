@@ -8,11 +8,10 @@ function error_exit(){
 function install_Prerequisites(){
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
-	sudo apt-get install -y autoconf bison build-essential ccache flex \
-	gawk gettext git-core libncurses5-dev libnl-3-200 libnl-3-dev \
+	sudo apt-get install -y autoconf bison build-essential ccache file flex \
+	g++ git gawk gettext git-core libncurses5-dev libnl-3-200 libnl-3-dev \
 	libnl-genl-3-200 libnl-genl-3-dev libssl-dev ncurses-term python \
-	quilt sharutils subversion texinfo unzip \
-	xsltproc zlib1g-dev
+	quilt sharutils subversion texinfo unzip wget xsltproc zlib1g-dev
 	sudo apt-get -y autoremove
 }
 
