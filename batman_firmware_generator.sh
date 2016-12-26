@@ -13,7 +13,7 @@ echo "Reading mesh functions...." >&2
 
 # create directory for firmwares output
 if [ -d "$install_dir"/firmwares ]; then
-	cd "$install_dir"/firmwares && rm *.bin
+	cd "$install_dir"/firmwares && rm ./*.bin
 else
 	mkdir "$install_dir"/firmwares
 fi
@@ -58,5 +58,5 @@ case $batman_routing_algo in
 		error_exit "check batman protocol version selection, it is wrong"
 esac
 echo "Firmware files are bellow"
-echo "on directory "$install_dir"/firmwares"
+echo "on directory $install_dir/firmwares"
 cd "$install_dir"/firmwares && ls -l ./*.bin

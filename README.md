@@ -4,7 +4,7 @@ The objective here is to evaluate robustness and performance of a batman-adv mes
 
 This project involves the following contents:
 
-Mesh nodes built on OpenWRT/LEDE-capable wireless routers (TP-LINK WDR-3600 and WR740, D-LINK DIR-505 and DIR-810, Ubiquity UAP-LR, UAP and NanoLocoM5, and Raspberry Pi 1 and 2)
+Mesh nodes built on LEDE-capable wireless routers (TP-LINK WDR-3600 and WR740, D-LINK DIR-505 and DIR-810, Ubiquiti UnifiAP-LR, UnifiAP and NanoLocoM5)
 
 The mesh nodes run LEDE with batman-adv mesh protocol which creates a giant mesh "L2 bridge" with all nodes; current configuration uses both radios (2.4GHz and 5GHz, where available) as adhoc interfaces. Both radios can be configured also as access points to serve wireless (non-mesh) clients. Wired LAN ports of all routers are bridged too via linux-bridge.
 

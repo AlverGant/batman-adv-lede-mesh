@@ -9,6 +9,7 @@ config wifi-device 'radio0'
 
 config wifi-iface
 	option device 'radio0'
+	option encryption 'none'
 	option mode 'adhoc'
 	option ssid $meshssid
 	option bssid $bssid
@@ -30,3 +31,7 @@ config wifi-iface
 	option nasid 'meshmobility'
 	option pmk_r1_push '1'
 	option disabled $radio0_ap_disable
+	option macfilter $macfilter
+	list maclist $maclist
+	option hidden $hide_ap_ssid
+

@@ -25,10 +25,13 @@ config interface $interface_name
 
 config interface 'wan'
 	option ifname 'eth0.2'
-	option proto 'dhcp'
+	option proto 'static'
+	option hostname $hostname
+	option ipaddr '$wan_ip'
+	option netmask '$wan_netmask'
+	option gateway '$wan_gateway'
 
 config interface 'wan6'
 	option ifname 'eth0.2'
 	option proto 'dhcpv6'
-
 

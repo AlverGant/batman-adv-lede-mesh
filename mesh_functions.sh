@@ -13,6 +13,7 @@ function install_Prerequisites(){
 	libnl-genl-3-200 libnl-genl-3-dev libssl-dev ncurses-term python \
 	quilt sharutils subversion texinfo unzip \
 	xsltproc zlib1g-dev
+	sudo apt-get -y autoremove
 }
 
 function download_LEDE_source(){
@@ -162,7 +163,7 @@ function compile_Image(){
 	# Compile from source
 	rm "${build_dir[$batman_routing_algo]}"/bin/"${target[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
 	cd "${build_dir[$batman_routing_algo]}" || error_exit "Build directory cannot be found anymore, please check internet connection and rerun script"
-	make -j${nproc} V=s
+	make -j"${nproc}" V=s
 }
 
 function build_Image(){
@@ -177,7 +178,7 @@ function check_Firmware_imagebuilder(){
 	export build_successfull='0'
 	export checksum_OK='0'
 	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/"${firmware_name_imagebuilder[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || error_exit "firmware not found, check available disk space"
 	if [ -f "${firmware_name_imagebuilder[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -195,7 +196,7 @@ function check_Firmware_imagebuilder(){
 }
 
 function copy_Firmware_imagebuilder(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || error_exit "firmware not found, check available disk space"
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
 		cp "${firmware_name_imagebuilder[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_imagebuilder[$devicetype]}"
@@ -209,7 +210,7 @@ function check_Firmware_compile(){
 	export build_successfull='0'
 	export checksum_OK='0'
 	echo "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/"${firmware_name_compile[$devicetype]}"
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || error_exit "firmware not found, check available disk space"
 	if [ -f "${firmware_name_compile[$devicetype]}" ]; then
 		echo "Compilation Successfull"
 		export build_successfull='1'
@@ -227,7 +228,7 @@ function check_Firmware_compile(){
 }
 
 function copy_Firmware_compile(){
-	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || exit
+	cd "${build_dir[$batman_routing_algo]}"/bin/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}" || error_exit "firmware not found, check available disk space"
 	if [[ $build_successfull -eq '1' && $checksum_OK -eq '1' ]] ; then
 		cp "${firmware_name_compile[$devicetype]}" "$install_dir"/firmwares/"$hostname".bin
 		rm "${firmware_name_compile[$devicetype]}"

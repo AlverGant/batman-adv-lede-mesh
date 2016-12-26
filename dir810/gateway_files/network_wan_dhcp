@@ -24,6 +24,8 @@ config interface $interface_name
 config interface 'wan'
 	option ifname 'eth0.2'
 	option proto 'dhcp'
+	option hostname $hostname
+	option mtu '1500'
 
 config interface 'wan6'
 	option ifname 'eth0.2'
