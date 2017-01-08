@@ -192,3 +192,10 @@ config rule
 #	option dest_ip	194.25.2.129
 #	option dest_port	120
 #	option proto	tcp
+
+config rule 'openssh_server'
+	option name 'ssh from wan to lan'
+	option src 'wan'
+	option target 'ACCEPT'
+	option proto 'tcp'
+	option dest_port '22'
