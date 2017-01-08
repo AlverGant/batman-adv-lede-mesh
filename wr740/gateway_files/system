@@ -4,6 +4,7 @@ config system
 	option zonename 'America/Sao Paulo'
 	option ttylogin '0'
 	option log_size '64'
+	option conloglevel '7'
 	option urandom_seed '0'
 	option log_ip $batman_monitor_ip
 
