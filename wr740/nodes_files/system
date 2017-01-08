@@ -3,6 +3,9 @@ config system
 	option timezone 'BRT3BRST,M10.3.0/0,M2.3.0/0'
 	option zonename 'America/Sao Paulo'
 	option log_ip $batman_monitor_ip
+	option ttylogin '0'
+	option log_size '64'
+	option urandom_seed '0'
 	option conloglevel '7'
 
 config timeserver 'ntp'
