@@ -13,7 +13,7 @@ config dnsmasq
 	option readethers '1'
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/etc/resolv.conf'
-	option localservice '1'
+	option localservice '0'
 
 config dhcp 'lan'
 	option interface 'lan'
@@ -29,3 +29,4 @@ config odhcpd 'odhcpd'
 	option maindhcp '0'
 	option leasefile '/tmp/hosts/odhcpd'
 	option leasetrigger '/usr/sbin/odhcpd-update'
+
