@@ -11,9 +11,9 @@ config interface 'lan'
 	option ipaddr $lan_ip
 	option netmask $lan_netmask
 	option ip6assign '60'
-	option _orig_ifname 'eth0.1'
+	option _orig_ifname 'eth0'
 	option _orig_bridge 'true'
-	option ifname 'bat0 eth0.1'
+	option ifname 'bat0 eth0'
 	option hostname $hostname
 	option mtu '1500'
 
