@@ -7,11 +7,13 @@ config interface 'loopback'
 config interface 'lan'
 	option force_link '1'
 	option type 'bridge'
-	option proto 'dhcp'
+	option proto 'static'
+	option ipaddr $lan_ip
+	option netmask $lan_netmask
 	option ip6assign '60'
-	option _orig_ifname 'eth0'
+	option _orig_ifname 'eth0.1'
 	option _orig_bridge 'true'
-	option ifname 'bat0 eth0'
+	option ifname 'bat0 eth0.1'
 	option hostname $hostname
 	option mtu '1500'
 
