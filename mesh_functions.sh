@@ -23,8 +23,7 @@ function download_LEDE_source(){
 function downloadImageBuilder(){
 	echo "Downloading LEDE Image Builder"
 	cd "$install_dir" || error_exit "Installation directory cannot be found anymore, please git clone batman repo again"
-	#rm lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
-	wget -N --continue http://lede-project.tetaneutral.net/snapshots/targets/"${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
+	wget -N --continue http://mirrors.linux.ro/lede/downloads/snapshots/targets/${target[$devicetype]}"/"${subtarget[$devicetype]}"/lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 	rm -rf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64
 	tar xf lede-imagebuilder-"${target[$devicetype]}"-"${subtarget[$devicetype]}".Linux-x86_64.tar.xz
 }
