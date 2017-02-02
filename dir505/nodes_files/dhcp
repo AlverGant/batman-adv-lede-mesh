@@ -14,19 +14,12 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/etc/resolv.conf'
 	option localservice '0'
-	list server '/$domain/$lan_ip'
-	list server '/$upstream_domain/$upstream_dns'
 
 config dhcp 'lan'
 	option interface 'lan'
-	option start $ip_start
-	option limit $number_of_ips
-	option leasetime $leasetime
 	option dhcpv6 'disabled'
 	option ra 'disabled'
-	list dhcp_option '6,$lan_ip,8.8.8.8'
-	option dynamicdhcp $dynamicdhcp
-	option ignore '0'
+	option ignore '1'
 
 config dhcp 'wan'
 	option interface 'wan'
